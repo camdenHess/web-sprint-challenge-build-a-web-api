@@ -18,12 +18,15 @@ const validateProjectId = (req, res, next) => {
 }
 
 const validateProject = (req, res, next) => {
-    const { name, description } = req.body
+    const { name, description, completed } = req.body
     if (!name || !description) {
         res.status(400).json({
             message: 'name and description are required'
         })
     } else {
+        if(completed) {
+            req.completed = completed
+        }
         req.name = name
         req.description = description
         next()
