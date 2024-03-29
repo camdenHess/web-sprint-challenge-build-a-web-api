@@ -1,1 +1,48 @@
-// Write your "projects" router here!
+const express = require('express')
+
+const {
+    validateProjectId
+} = require('./projects-middleware')
+
+const Project = require('./projects-model')
+
+const router = express.Router()
+
+router.get('/', (req, res, next) => {
+    Project.get()
+        .then(projects => {
+            res.json(projects)
+        })
+        .catch(next)
+})
+
+router.get('/:id', validateProjectId, (req, res) => {
+    res.json(req.proj)
+})
+
+router.post('/', (req, res, next) => {
+    console.log(req)
+})
+
+router.put('/:id', (req, res, next) => {
+    console.log(req)
+})
+
+router.delete('/:id', (req, res, next) => {
+    console.log(req)
+})
+
+router.get('/:id/actions', (req, res, next) => {
+    console.log(req)
+})
+
+
+router.use((err, req, res, next) => {
+    res.status(err.status || 500).json({
+        customMessage: 'something went wrong',
+        message: err.message,
+        stack: err.stack
+    })
+})
+
+module.exports = router
