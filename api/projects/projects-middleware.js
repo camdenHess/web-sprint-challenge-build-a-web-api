@@ -10,7 +10,7 @@ const validateProjectId = (req, res, next) => {
                 next()
             }
         })
-        .catch(err => {
+        .catch(() => {
             res.status(500).json({
                 message: 'problem finding project'
             })
