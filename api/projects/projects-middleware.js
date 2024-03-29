@@ -33,8 +33,23 @@ const validateProject = (req, res, next) => {
     }
 }
 
+const putValidateProject = (req, res, next) => {
+    const { name, description, completed } = req.body
+    if (!name || !description || completed === undefined) {
+        res.status(400).json({
+            message: 'name, description, and completed are required'
+        })
+    } else {
+        req.comp = completed
+        req.name = name
+        req.description = description
+        next()
+    }
+}
+
 
 module.exports = {
     validateProjectId,
-    validateProject
+    validateProject,
+    putValidateProject
 }
