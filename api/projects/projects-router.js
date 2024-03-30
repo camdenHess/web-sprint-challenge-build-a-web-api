@@ -38,9 +38,16 @@ router.put('/:id', validateProjectId, putValidateProject, (req, res, next) => {
         .catch(next)
 })
 
-router.delete('/:id', validateProjectId, (req, res, next) => {
-    Project.remove(req.params.id)
-        .catch(next)
+router.delete('/:id', validateProjectId, async (req, res, next) => {
+    try {
+        await Project.remove(req.params.id)
+        res.status(200).json({
+            message: 'successfully deleted project'
+        })
+    }
+    catch (err){
+        next(err)
+    }
 })
 
 router.get('/:id/actions', (req, res, next) => {
