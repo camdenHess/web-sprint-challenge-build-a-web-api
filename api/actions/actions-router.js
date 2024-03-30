@@ -7,7 +7,11 @@ const Action = require('./actions-model')
 const router = express.Router()
 
 router.get('/', (req, res, next) => {
-    console.log(req)
+    Action.get()
+        .then(actions => {
+            res.json(actions)
+        })
+        .catch(next)
 })
 
 router.get('/:id', (req, res, next) => {
